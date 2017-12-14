@@ -19,9 +19,10 @@
         <input type="checkbox" v-model="required"/></li>
       </ul>
     <ul class="results">
-      <li v-for="(mds, index) in md5data"><h2>Proposition {{index +1}}</h2>Your password: {{mds.text}} <br/>
-      MD5 hash: {{mds.hash}}  </li>
+      <li v-for="(mds, index) in md5data"><h2>Proposition {{index +1}}</h2>Your password: {{mds.text}}<button  @click="fcopy(index, mds.text)">Copy to Clipboard</button> <br/>
+      MD5 hash: {{mds.hash}}  <button @click="fcopy(index, mds.hash)">Copy to Clipboard</button></li>
     </ul>
+     <textarea type="text" id="temp"  ></textarea> 
   </div>
     <div class="right-column">
     <selected-options></selected-options>
@@ -33,6 +34,7 @@
 <script>
 import selectedOptions from './selectedOptions'
 import generate from './generator.js'
+
 export default {
   name: 'Formcontainer',
   components: { selectedOptions },
@@ -58,7 +60,18 @@ export default {
     },
     updatevar () {
       this.$store.dispatch('updateVariant', this.variantnumber)
+    },
+    fcopy (id,val) {
+      let el = document.getElementById('temp')
+      el.value=val;
+      
+   
+      setTimeout(function(){el.select();
+      document.execCommand('copy');},0)
+      
+        el.blur()
     }
+    
 
   }
 }
@@ -86,8 +99,26 @@ a {
   border-right:3px solid #000;
 }
 .results li{
+  box-sizing: border-box;
+  padding:10px 10px;
+  background: #d5d5d5;
+  position:relative;
   margin:0;
-  width:50%;
+  margin-bottom:10px;
+  margin-left:2%;
+  width:45%;
   float:left;
+  text-align:left;
+}
+textarea#temp{
+  /*visibility:hidden;*/
+  width:0;
+  height:0;
+  position:absolute;
+  right:0;
+  top:0;
+}
+.results button{
+  float:right;
 }
 </style>
