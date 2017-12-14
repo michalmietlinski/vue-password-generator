@@ -4,7 +4,7 @@
     <h2>What do you need?</h2>
     <ul>
       <li>How many elements?<br/>
-        <input type="number" v-model="elementnumber" @input="updatenum"/></li>
+        <input type="number" min="4" v-model="elementnumber" @input="updatenum"/></li>
         <li>How many variants?<br/>
         <input type="number" v-model="variantnumber" @input="updatevar"/></li>
     </ul>
@@ -15,6 +15,8 @@
         <input type="checkbox" v-model="numbers"/></li>
         <li>Include specials?<br/>
         <input type="checkbox" v-model="specials"/></li>
+        <li>Each one required?<br/>
+        <input type="checkbox" v-model="required"/></li>
       </ul>
     <ul class="results">
       <li v-for="(mds, index) in md5data"><h2>Proposition {{index +1}}</h2>Your password: {{mds.text}} <br/>
@@ -41,12 +43,13 @@ export default {
       variantnumber: this.$store.state.variants,
       specials: false,
       numbers: false,
-      capitals: false
+      capitals: false,
+      required: false
     }
   },
   computed: {
     md5data () {
-      return generate(this.elementnumber, this.variantnumber, this.capitals, this.specials, this.numbers)
+      return generate(this.elementnumber, this.variantnumber, this.capitals, this.specials, this.numbers, this.required)
     }
   },
   methods: {
