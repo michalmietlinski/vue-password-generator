@@ -61,18 +61,15 @@ export default {
     updatevar () {
       this.$store.dispatch('updateVariant', this.variantnumber)
     },
-    fcopy (id,val) {
+    fcopy (id, val) {
       let el = document.getElementById('temp')
-      el.value=val;
-      
-   
-      setTimeout(function(){el.select();
-      document.execCommand('copy');},0)
-      
-        el.blur()
+      el.value = val
+      setTimeout(function () {
+        el.select()
+        document.execCommand('copy')
+      }, 0)
+      el.blur()
     }
-    
-
   }
 }
 </script>
